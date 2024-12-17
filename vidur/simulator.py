@@ -87,7 +87,7 @@ class Simulator:
     def _write_output(self) -> None:
         logger.info("Writing output")
         # print('fth pass1')
-        # self._metric_store.plot()
+        self._metric_store.plot()
         print('fth pass2')
         logger.info("Metrics written")
 

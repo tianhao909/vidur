@@ -3,7 +3,7 @@
 
 ## Preliminaries
 
-For every request, we define the following key metrics:
+For every request, we define the following key metrics:对于每个请求，我们定义了以下关键指标：
 
 1. Request arrival time ($a_r$): the time at which a request enters the system
 2. Request schedule time ($s_r$): the time at which a given request is scheduled for the first time (irrespective of subsequent restarts).
