@@ -61,6 +61,9 @@ class Simulator:
             f"Starting simulation with cluster: {self._cluster} and {len(self._event_queue)} requests"
         )
 
+        # print('fth pass')
+
+
         while self._event_queue and not self._terminate:
             _, event = heapq.heappop(self._event_queue)
             self._set_time(event._time)
@@ -79,11 +82,16 @@ class Simulator:
 
         logger.info(f"Simulation ended at: {self._time}s")
 
+        # print('fth pass')
+
     def _write_output(self) -> None:
         logger.info("Writing output")
-
-        self._metric_store.plot()
+        # print('fth pass1')
+        # self._metric_store.plot()
+        print('fth pass2')
         logger.info("Metrics written")
+
+        # print('fth pass')
 
         if self._config.metrics_config.write_json_trace:
             self._write_event_trace()

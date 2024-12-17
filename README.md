@@ -132,6 +132,11 @@ python -m vidur.main -h
 
     ![Chrome Trace](./assets/chrome_trace.png)
 
+模拟器输出
+指标将直接记录到 wandb，并在 simulator_output/<时间戳> 目录下存储一份副本。所有记录的指标的描述可以在此文档中找到。
+Vidur 导出每次模拟的 Chrome 跟踪数据。跟踪文件可以在 simulator_output 目录下找到。通过导航到 chrome://tracing/ 或 edge://tracing/ 并加载跟踪文件，可以打开跟踪数据。
+./assets/chrome_trace.png
+
 ## Formatting Code
 
 To format code, execute the following command:

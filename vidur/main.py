@@ -8,7 +8,11 @@ def main() -> None:
 
     set_seeds(config.seed)
 
+    # print('fth pass')
+
     simulator = Simulator(config)
+    # print('fth pass')
+
     simulator.run()
 
 

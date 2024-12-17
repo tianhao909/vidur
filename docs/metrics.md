@@ -1,4 +1,5 @@
 # Understanding metrics logged by the simulator
+理解模拟器记录的指标
 
 ## Preliminaries
 
@@ -13,6 +14,18 @@ For every request, we define the following key metrics:
 7. Request scheduling delay ($d_r$): the total amount for which the request is waiting before getting scheduled ($s_r - a_r$).
 
 Note that arrival, schedule and completion time refer to a specific point in time, where as, execution, preemption time, scheduling delay refer to period of time.
+
+初步说明
+对于每个请求，我们定义了以下关键指标：
+
+请求到达时间（$a_r$）：请求进入系统的时间。
+请求调度时间（$s_r$）：给定请求第一次被调度的时间（不考虑后续的重启）。
+请求完成时间（$c_r$）：请求完成的时间。
+请求预填充完成时间（$f_r$）：预填充完成并产生第一个输出令牌的时间。
+请求执行时间（$e_r$）：请求在 GPU 上实际执行的总时间（跨越所有尝试） - 不包括请求分配到副本上但不执行的时间，由于管道泡沫等原因。
+请求抢占时间（$p_r$）：请求分配到副本上但不执行的总时间，由于管道泡沫、调度抢占、重启之间的时间等（跨所有尝试累积）。
+请求调度延迟（$d_r$）：请求在被调度前等待的总时间（$s_r - a_r$）。
+请注意，到达、调度和完成时间指的是特定时间点，而执行、抢占时间和调度延迟指的是时间段。
 
 ## Logged Metics
 
