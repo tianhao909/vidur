@@ -77,6 +77,16 @@ We need actual GPUs to get profiling data for a new model. Once the profiling is
         python vidur/profiling/mlp/main.py \
         --models codellama/CodeLlama-34b-Instruct-hf \
         --num_gpus 4
+
+        fth
+
+         python -m vidur.profiling.mlp.main \
+        --models codellama/CodeLlama-34b-Instruct-hf \
+        --num_gpus 4
+
+        python -m vidur.profiling.mlp.main \
+        --models codellama/CodeLlama-34b-Instruct-hf \
+        --num_gpus 1
     ```
 
     - Run `python vidur/profiling/mlp/main.py --help` for more options.
