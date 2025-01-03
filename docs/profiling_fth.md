@@ -58,8 +58,14 @@ We need actual GPUs to get profiling data for a new model. Once the profiling is
     在 `data/model_configs` 中为新模型添加一个 YAML 模型配置。
     - Use the model's HuggingFace model id for the file name eg. `data/model_configs/meta-llama/Llama-2-70b-hf.yml`. 
         使用模型的 HuggingFace 模型 ID 作为文件名，例如 `data/model_configs/meta-llama/Llama-2-70b-hf.yml`。
+        fth 
+        https://huggingface.co/meta-llama/Llama-2-70b-hf
+        https://hf-mirror.com/meta-llama/Llama-2-70b-hf
+
+
     - Refer HuggingFace `config.json` for the model eg. <https://huggingface.co/meta-llama/Llama-2-70b-hf/blob/main/config.json>. 
         参考 HuggingFace `config.json` 来配置模型，例如 <https://huggingface.co/meta-llama/Llama-2-70b-hf/blob/main/config.json>。
+
     - Ensure that correct parameters are set in the YAML file so that the reference transformer model [GPTModel](vidur/profiling/mlp/mlp_impl.py) closely resembles the new model.
         确保在 YAML 文件中设置了正确的参数，以便参考的 transformer 模型 [GPTModel](vidur/profiling/mlp/mlp_impl.py) 与新模型非常相似。
     - We use this reference model to profile only the MLP operations of all the models so the attention operations are no-op'ed here.
@@ -171,6 +177,11 @@ Currently available data include: 目前可用的数据包括：
         --collective all_reduce
     ```
 
+    ```bash
+        python vidur/profiling/collectives/main.py \
+        --num_workers_per_node_combinations 2 \
+        --collective all_reduce
+    ```
     - One may need to adjust `--num_workers_per_node_combinations` depending on the number of GPUs in the node eg. `--num_workers_per_node_combinations 1,2,4` for Azure Standard_NC96ads_A100_v4 node.
         根据节点中的 GPU 数量，可能需要调整 `--num_workers_per_node_combinations`，例如对于 Azure Standard_NC96ads_A100_v4 节点使用 `--num_workers_per_node_combinations 1,2,4`。
     - Copy the CSV file from `profiling_outputs/collectives/<timestamp>/all_reduce.csv` to `data/profiling/network/{network_device}/allreduce.csv`.
@@ -195,6 +206,10 @@ Currently available data include: 目前可用的数据包括：
     fth
         python /app/software1/vidur/vidur/profiling/collectives/main.py \
         --num_workers_per_node_combinations 1,2,4,8 \
+        --collective send_recv
+
+        python /app/software1/vidur/vidur/profiling/collectives/main.py \
+        --num_workers_per_node_combinations 2 \
         --collective send_recv
     ```
 
