@@ -1,47 +1,39 @@
-# Vidur: LLM Inference System Simulator
+# Vidur: LLM Inference System Simulator Vidur：大型语言模型（LLM）推理系统模拟器
 
 Vidur is a high-fidelity and extensible LLM inference system simulator. It can help you with:
-
-Vidur：大型语言模型（LLM）推理系统模拟器
 Vidur 是一个高保真且可扩展的大型语言模型（LLM）推理系统模拟器。它可以帮助您：
 
-1.在不同的工作负载和配置下研究模型的系统性能。
-   | TTFT | TPOT | 请求端到端时间 | 批次大小 |
-   *`Llama-3-8B` 在单块 `A100 80GB` 上以 6.45 QPS 运行 [AzureLLMInferenceTrace2023_conv](https://github.com/Azure/AzurePublicDataset/blob/master/data/AzureLLMInferenceTrace_conv.csv) 跟踪*
-
 1. Study the system performance of models under different workloads and configurations.
+   在不同的工作负载和配置下研究模型的系统性能。
 
     | TTFT | TPOT | Request E2E Time | Batch Size |
-    | --- | --- | --- | --- |
-    | ![TTFT](./assets/prefill_e2e_time.png) | ![TPOT](./assets/decode_time_execution_plus_preemption_normalized.png) | ![Request E2E Time](./assets/request_e2e_time.png) | ![Batch Size](./assets/batch_size.png) |
+    *`Llama-3-8B` running the [AzureLLMInferenceTrace2023_conv] trace on single `A100 80GB` at 6.45 QPS
 
-    *`Llama-3-8B` running the [AzureLLMInferenceTrace2023_conv](https://github.com/Azure/AzurePublicDataset/blob/master/data/AzureLLMInferenceTrace_conv.csv) trace on single `A100 80GB` at 6.45 QPS*
+   | TTFT | TPOT | 请求端到端时间 | 批次大小 |
+   *`Llama-3-8B` 在单张 `A100 80GB` 上以 6.45 QPS 运行 [AzureLLMInferenceTrace2023_conv] Trace 获得的结果
 
-2. 进行容量规划并为您的 LLM 部署找到最佳的部署配置。
-   ![配置搜索](./assets/llama70b_Chat1M_ttft_tbt_90_99_2.0_0.2.jpeg)
-    *不同部署配置的每美元容量对比 TTFT-P90 和 TBT-P99 对于 LLaMA2-70B.*
+
 2. Capacity planning and finding the best deployment configuration for your LLM deployments.
-   ![Config Search](./assets/llama70b_Chat1M_ttft_tbt_90_99_2.0_0.2.jpeg)
-*Capacity per dollar for different deployment configurations vs TTFT-P90 and TBT-P99 for LLaMA2-70B.*
+   进行容量规划并为您的 LLM 部署找到最佳的部署配置。
 
+   ![Config Search 配置搜索]](./assets/llama70b_Chat1M_ttft_tbt_90_99_2.0_0.2.jpeg)
+   *Capacity per dollar for different deployment configurations vs TTFT-P90 and TBT-P99 for LLaMA2-70B.*
+   *不同部署配置的每美元容量对比 TTFT-P90 和 TBT-P99 对于 LLaMA2-70B.*
 
-3. 快速测试新的研究思路，如新的调度算法、优化措施如预测性解码等。
-   ...所有这些操作都不需要 GPU 访问，除了一个快速的初始性能分析阶段 🎉。我们强烈建议您查看我们的 [MLSys'24 论文](https://arxiv.org/abs/2405.05465) 和 [演讲](https://mlsys.org/virtual/2024/poster/2667) 以获取更多详细信息。
+    
 3. Quickly test new research ideas like new scheduling algorithms, optimizations like speculative decoding, etc.
+    快速测试新的研究思路，如新的调度算法、优化措施如预测性解码等
 
-... all without access to GPUs except for a quick initial profiling phase 🎉. We highly recommend checking out our [MLSys'24 paper](https://arxiv.org/abs/2405.05465) and [talk](https://mlsys.org/virtual/2024/poster/2667) for more details.
+... all without access to GPUs except for a quick initial profiling phase 🎉. We highly recommend checking out our [MLSys'24 paper](https://arxiv.org/abs/2405.05465) and [talk](https://mlsys.org/virtual/2024/poster/2667) for more details
+   ...所有这些操作都不需要 GPU 访问，除了一个快速的初始性能分析阶段 🎉。我们强烈建议您查看我们的 [MLSys'24 论文](https://arxiv.org/abs/2405.05465) 和 [演讲](https://mlsys.org/virtual/2024/poster/2667) 以获取更多详细信息。
 
 
-## Supported Models
+## Supported Models 支持的模型
 
-支持的模型
-
+__Instructions on adding a new model to existing or new SKUs can be found [here](docs/profiling.md)__.
 _添加新模型到现有或新的 SKU 的说明可以在此[文档](docs/profiling.md)中找到_。
 
 | 模型/设备 | A100 80GB DGX | H100 DGX | 4xA100 80GB 对节点 NVLink | 8xA40 对节点 NVLink |
-
-__Instructions on adding a new model to existing or new SKUs can be found [here](docs/profiling.md)__.
-
 | Model / Device | A100 80GB DGX | H100 DGX | 4xA100 80GB Pairwise NVLink Node | 8xA40 Pairwise NVLink Node |
 | --- | --- | --- | --- | --- |
 | `meta-llama/Meta-Llama-3-8B` | ✅ | ❌ | ✅ | ❌ |
@@ -201,3 +193,4 @@ trademarks or logos is subject to and must follow
 [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.
+
