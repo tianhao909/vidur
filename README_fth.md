@@ -65,11 +65,11 @@ _添加新模型到现有或新的 SKU 的说明可以在此[文档](docs/profil
 
 
 
-## Setup
+## Setup 设置
 
-### Using `mamba`
+### Using `mamba` 使用 mamba
 
-To run the simulator, create a mamba environment with the given dependency file.
+To run the simulator, create a mamba environment with the given dependency file. 要运行模拟器，请使用给定的依赖文件创建一个 mamba 环境。
 
 ```sh
 mamba env create -p ./env -f ./environment.yml
@@ -85,9 +85,16 @@ mamba env update -f environment-dev.yml
 5. Install the dependencies using `python -m pip install -r requirements.txt`
 6. Run `deactivate` to deactivate the virtual environment
 
-### Using `conda` (Least recommended)
+确保系统安装了 Python 3.10. 请参阅 https://www.bitecode.dev/p/installing-python-the-bare-minimum
+进入仓库根目录
+使用 venv 模块创建虚拟环境：python3.10 -m venv .venv
+使用 source .venv/bin/activate 激活虚拟环境
+使用 python -m pip install -r requirements.txt 安装依赖
+运行 deactivate 以停用虚拟环境
 
-To run the simulator, create a conda environment with the given dependency file.
+### Using `conda` (Least recommended) 使用 conda (不推荐)
+
+To run the simulator, create a conda environment with the given dependency file. 要运行模拟器，请使用给定的依赖文件创建一个 conda 环境。
 
 ```sh
 conda env create -p ./env -f ./environment.yml
@@ -101,28 +108,34 @@ conda env update -f environment-dev.yml
 conda env update -f environment.yml
 ```
 
-### Setting up wandb (Optional)
+### Setting up wandb (Optional) 配置 wandb (可选)
 
-First, setup your account on `https://<your-org>.wandb.io/` or public wandb, obtain the api key and then run the following command,
+
+First, setup your account on `https://<your-org>.wandb.io/` or public wandb, obtain the api key and then run the following command, 
+首先，在 https://<your-org>.wandb.io/ 或公共 wandb 上设置您的帐户，获取 API 密钥，然后运行以下命令：
+
 
 ```sh
 wandb login --host https://<your-org>.wandb.io
 ```
 
 To opt out of wandb, pick any one of the following methods:
+如需退出 wandb，请选择以下任一方法：
 
 1. `export WANDB_MODE=disabled` in your shell or add this in `~/.zshrc` or `~/.bashrc`. Remember to reload using `source ~/.zshrc`.
 2. Set `wandb_project` and `wandb_group` as `""` in `vidur/config/default.yml`. Also, remove these CLI params from the shell command with which the simulator is invoked.
+在 shell 中 export WANDB_MODE=disabled 或将其添加到 ~/.zshrc 或 ~/.bashrc 中。记得使用 source ~/.zshrc 重新加载。
+在 vidur/config/default.yml 中将 wandb_project 和 wandb_group 设置为 ""。同时，从执行模拟器的 shell 命令中删除这些 CLI 参数。
 
-## Running the simulator
+## Running the simulator  运行模拟器
 
-To run the simulator, execute the following command from the repository root,
+To run the simulator, execute the following command from the repository root, 要运行模拟器，请在仓库根目录下执行以下命令：
 
 ```sh
 python -m vidur.main
 ```
 
-or a big example with all the parameters,
+or a big example with all the parameters, 或使用包含所有参数的大例子：
 
 ```sh
 python -m vidur.main  \
@@ -146,27 +159,27 @@ python -m vidur.main  \
 --random_forrest_execution_time_predictor_config_prediction_max_tokens_per_request 16384
 ```
 
-or to get information on all parameters,
+or to get information on all parameters, 或获取所有参数信息：
 
 ```sh
 python -m vidur.main -h
 ```
 
-## Simulator Output
+## Simulator Output 模拟器输出
 
 * The metrics will be logged to wandb directly and a copy will be stored in the `simulator_output/<TIMESTAMP>` directory. __A description of all the logged metrics can be found [here](docs/metrics.md).__
 * Vidur exports chrome traces of each simulation. The trace can be found in the `simulator_output` directory. The trace can be opened by navigating to `chrome://tracing/` or `edge://tracing/` and loading the trace.
 
     ![Chrome Trace](./assets/chrome_trace.png)
 
-模拟器输出
+
 指标将直接记录到 wandb，并在 simulator_output/<时间戳> 目录下存储一份副本。所有记录的指标的描述可以在此文档中找到。
 Vidur 导出每次模拟的 Chrome 跟踪数据。跟踪文件可以在 simulator_output 目录下找到。通过导航到 chrome://tracing/ 或 edge://tracing/ 并加载跟踪文件，可以打开跟踪数据。
 ./assets/chrome_trace.png
 
 ## Formatting Code
 
-To format code, execute the following command:
+To format code, execute the following command: 要格式化代码，请执行以下命令：
 
 ```sh
 make format
@@ -194,3 +207,14 @@ trademarks or logos is subject to and must follow
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.
 
+贡献
+
+我们欢迎对该项目的贡献和建议。大多数贡献需要您同意一份贡献者许可协议（CLA），声明您有权利并确实授予我们使用您贡献的权利。详情请访问 https://cla.opensource.microsoft.com。
+
+当您提交一个拉取请求时，CLA 机器人会自动确定您是否需要提供 CLA，并适当地标注 PR（例如，状态检查、评论）。请按照机器人提供的说明进行操作。对于所有使用我们 CLA 的仓库，您只需执行一次。
+
+本项目已采用 Microsoft 开源行为准则。欲了解更多信息，请参见 行为准则常见问题 或联系 opencode@microsoft.com 获取任何其他问题或评论。
+
+商标
+
+本项目可能包含项目、产品或服务的商标或徽标。使用 Microsoft 商标或徽标的授权使用必须遵循 Microsoft 的商标和品牌指南。在修改版本的项目中使用 Microsoft 商标或徽标不得引起混淆或暗示 Microsoft 赞助。任何使用第三方商标或徽标的行为都需遵循第三方的政策
