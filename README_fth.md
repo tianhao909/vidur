@@ -106,6 +106,10 @@ fth
 conda env create -p ./env -f ./environment.yml
 conda env update -f environment-dev.yml
 conda env update -f environment.yml
+
+conda activate vidur
+pip install -r requirements-dev.txt 
+pip install -r requirements.txt 
 ```
 
 ### Setting up wandb (Optional) 配置 wandb (可选)
