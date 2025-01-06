@@ -110,6 +110,8 @@ conda env update -f environment.yml
 conda activate vidur
 pip install -r requirements-dev.txt 
 pip install -r requirements.txt 
+pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+pip install -r requirements-dev.txt https://mirrors.aliyun.com/pypi/simple/
 ```
 
 ### Setting up wandb (Optional) 配置 wandb (可选)
@@ -162,6 +164,10 @@ python -m vidur.main  \
 --random_forrest_execution_time_predictor_config_prediction_max_batch_size 512 \
 --random_forrest_execution_time_predictor_config_prediction_max_tokens_per_request 16384
 ```
+
+
+用这个网址打开
+chrome://tracing/
 
 or to get information on all parameters, 或获取所有参数信息：
 
