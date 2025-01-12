@@ -61,6 +61,7 @@ class BaseSequenceManager(ABC):
         scheduler_outputs: SchedulerOutputs,
     ) -> Tuple[List[Sequence], List[SequenceMetadata]]:
         ignored_seqs: List[Sequence] = []
+        print('>>fth def on_schedule() vidur/sarathi/core/sequence_manager/base_sequence_manager.py')
         for seq_id in scheduler_outputs.ignored_seq_ids:
             assert seq_id in self.seq_map
             seq = self.seq_map[seq_id]

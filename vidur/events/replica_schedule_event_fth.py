@@ -16,13 +16,16 @@ class ReplicaScheduleEvent(BaseEvent):
 
         self._batches = []  # 初始化批处理列表
 
+
     def handle_event(
         self, scheduler: BaseGlobalScheduler, metrics_store: MetricsStore
     ) -> List[BaseEvent]:
         from vidur.events.batch_stage_arrival_event import BatchStageArrivalEvent  # 导入BatchStageArrivalEvent类
 
         replica_scheduler = scheduler.get_replica_scheduler(self._replica_id)  # 获取副本调度器 return self._replica_schedulers[replica_id]
+
         self._batches = replica_scheduler.on_schedule()  # 调度批处理任务
+
 
         if not self._batches:
             return []  # 如果没有批处理任务，返回空列表
@@ -33,7 +36,9 @@ class ReplicaScheduleEvent(BaseEvent):
         )  # 储存调度事件的度量数据
 
         for batch in self._batches:
+            # print('>>fth 进入调度每个批处理任务')
             batch.on_schedule(self.time)  # 调度每个批处理任务
+            # print('>>fth 进入调度每个批处理任务')
 
         return [
             BatchStageArrivalEvent(

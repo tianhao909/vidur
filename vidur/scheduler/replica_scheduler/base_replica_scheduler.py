@@ -135,6 +135,7 @@ class BaseReplicaScheduler(ABC):
         pass
 
     def on_schedule(self) -> List[Batch]:
+        # print('>>fth def on_schedule() vidur/vidur/scheduler/replica_scheduler/base_replica_scheduler.py')
         scheduled_batches = []
         while self._num_running_batches < self._num_stages:
             batch = self._get_next_batch()

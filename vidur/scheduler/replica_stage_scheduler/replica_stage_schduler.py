@@ -34,6 +34,7 @@ class ReplicaStageScheduler:
         self._is_busy = False
 
     def on_schedule(self) -> Tuple[Batch, BatchStage, ExecutionTime]:
+        print('>>fth def on_schedule() vidur/vidur/scheduler/replica_stage_scheduler/replica_stage_schduler.py')
         if self._is_busy or not self._batch_queue:
             return None, None, None
 

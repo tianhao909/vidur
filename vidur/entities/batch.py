@@ -115,6 +115,7 @@ class Batch(BaseEntity):
         self,
         time: float,
     ) -> None:
+        print('>>fth def on_schedule() vidur/vidur/entities/batch.py')
         self._scheduled_at = time
         self._scheduled = True
 
