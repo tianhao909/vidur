@@ -89,7 +89,7 @@ class BaseReplicaScheduler(ABC):  # 定义抽象基类BaseReplicaScheduler
             )
         )
 
-    def _get_request_next_num_tokens(self, request: Request) -> int:  # 获取请求的下一个token数量
+    def _get_request_next_num_tokens(self, request: Request) -> int:  # 获取该request的下一个阶段的token处理数量； 获取请求的下一个token数量
         assert not request.completed
 
         if request.is_prefill_complete:  # 如果请求的预填充完成

@@ -37,9 +37,9 @@ class ReplicaScheduleEvent(BaseEvent):
         )
 
         for batch in self._batches:
-            # print('>>fth 进入调度每个批处理任务')
+            print('>>fth 进入调度每个批处理任务 for batch in self._batches /disk1/futianhao/software1/vidur/vidur/events/replica_schedule_event.py')
             batch.on_schedule(self.time)
-            # print('>>fth 出去调度每个批处理任务')
+            print('>>fth 出去调度每个批处理任务 for batch in self._batches /disk1/futianhao/software1/vidur/vidur/events/replica_schedule_event.py')
 
         return [
             BatchStageArrivalEvent(
