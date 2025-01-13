@@ -24,9 +24,9 @@ class ReplicaScheduleEvent(BaseEvent):
         from vidur.events.batch_stage_arrival_event import BatchStageArrivalEvent
 
         replica_scheduler = scheduler.get_replica_scheduler(self._replica_id)
-        # print('fth进入函数片段，replica_scheduler.on_schedule()')   
+        print('fth进入函数片段，replica_scheduler.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_schedule_event.py')   
         self._batches = replica_scheduler.on_schedule()
-        # print('fth离开函数片段，replica_scheduler.on_schedule()')   
+        print('fth离开函数片段，replica_scheduler.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_schedule_event.py')   
 
         if not self._batches:
             return []
@@ -37,9 +37,9 @@ class ReplicaScheduleEvent(BaseEvent):
         )
 
         for batch in self._batches:
-            print('>>fth 进入调度每个批处理任务')
+            # print('>>fth 进入调度每个批处理任务')
             batch.on_schedule(self.time)
-            print('>>fth 出去调度每个批处理任务')
+            # print('>>fth 出去调度每个批处理任务')
 
         return [
             BatchStageArrivalEvent(

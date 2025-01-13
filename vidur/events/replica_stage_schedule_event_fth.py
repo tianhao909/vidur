@@ -33,7 +33,9 @@ class ReplicaStageScheduleEvent(BaseEvent):  # 定义一个继承自 BaseEvent �
         if not (self._batch and self._batch_stage):  # 如果批次或批次阶段不存在
             return []  # 返回一个空列表
 
+        print('>>>>fth进入函数片段，_batch_stage.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_stage_schedule_event.py')  
         self._batch_stage.on_schedule(self.time)  # 调用批次阶段的 on_schedule 方法，传入当前时间
+        print('>>>>fth离开函数片段，_batch_stage.on_schedule( /disk1/futianhao/software1/vidur/vidur/events/replica_stage_schedule_event.py')  
         metrics_store.on_replica_stage_schedule(  # 将调度信息记录到指标存储中
             self.time,
             self._replica_id,
