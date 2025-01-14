@@ -73,13 +73,15 @@ class SarathiReplicaScheduler(BaseReplicaScheduler):
 
         if request.is_prefill_complete:
             return 1  # 如果预填充完成，则返回1
-
+        
+        # 计算当前请求（request）在下一次处理时需要分配的 token 数量（next_num_tokens）。
+        # 它通过两者的最小值来限制处理的 token 数量，以确保既不会超过请求的剩余需求，也不会超出系统允许的 chunk 大小限制。
         next_num_tokens = min(
-            request.num_prefill_tokens - request.num_processed_tokens,
-            self._config.chunk_size - num_batch_tokens,
-        )  # 计算下一个块所需的代币数
+            request.num_prefill_tokens - request.num_processed_tokens,  # 请求中剩余未处理的 token 数
+            self._config.chunk_size - num_batch_tokens                 # 当前 batch 中允许的剩余 token 数
+        ) # 计算下一个块所需的token数
 
-        next_num_tokens = max(0, next_num_tokens)  # 确保代币数不为负
+        next_num_tokens = max(0, next_num_tokens)  # 确保token数不为负
 
         return next_num_tokens
 
