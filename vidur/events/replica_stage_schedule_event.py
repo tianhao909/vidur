@@ -29,7 +29,10 @@ class ReplicaStageScheduleEvent(BaseEvent):
             self._replica_id
         ]._replica_stage_schedulers[self._stage_id]
 
+        print('>>>>fth进入函数片段，stage_scheduler.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_stage_schedule_event.py')  
+        # vidur/vidur/scheduler/replica_stage_scheduler/replica_stage_schduler.py
         self._batch, self._batch_stage, execution_time = stage_scheduler.on_schedule()
+        print('>>>>fth离开函数片段，stage_scheduler.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_stage_schedule_event.py')  
 
         if not (self._batch and self._batch_stage):
             return []
