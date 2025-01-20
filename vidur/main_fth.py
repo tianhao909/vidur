@@ -10,6 +10,8 @@ def main() -> None:
 
     # print('fth pass')  # 打印调试信息
 
+    # print('>>>fth config {config}') # fth 打印配置信息
+
     simulator = Simulator(config)  # 创建模拟器实例
     # print('fth pass')  # 打印调试信息
 

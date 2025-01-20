@@ -29,17 +29,17 @@ class ReplicaStageScheduleEvent(BaseEvent):
             self._replica_id
         ]._replica_stage_schedulers[self._stage_id]
 
-        print('>>>>fth进入函数片段，stage_scheduler.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_stage_schedule_event.py')  
+        # print('>>>>fth进入函数片段，stage_scheduler.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_stage_schedule_event.py')  
         # vidur/vidur/scheduler/replica_stage_scheduler/replica_stage_schduler.py
         self._batch, self._batch_stage, execution_time = stage_scheduler.on_schedule()
-        print('>>>>fth离开函数片段，stage_scheduler.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_stage_schedule_event.py')  
+        # print('>>>>fth离开函数片段，stage_scheduler.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_stage_schedule_event.py')  
 
         if not (self._batch and self._batch_stage):
             return []
 
-        print('>>>>fth进入函数片段，_batch_stage.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_stage_schedule_event.py')  
+        # print('>>>>fth进入函数片段，_batch_stage.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_stage_schedule_event.py')  
         self._batch_stage.on_schedule(self.time)  # 调用批次阶段的 on_schedule 方法，传入当前时间
-        print('>>>>fth离开函数片段，_batch_stage.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_stage_schedule_event.py')  
+        # print('>>>>fth离开函数片段，_batch_stage.on_schedule() /disk1/futianhao/software1/vidur/vidur/events/replica_stage_schedule_event.py')  
         metrics_store.on_replica_stage_schedule(
             self.time,
             self._replica_id,

@@ -23,6 +23,10 @@ from vidur.execution_time_predictor.base_execution_time_predictor import (
     BaseExecutionTimePredictor,
 )
 from vidur.logger import init_logger
+import pdb 
+
+
+
 
 logger = init_logger(__name__)
 
@@ -482,7 +486,8 @@ class SklearnExecutionTimePredictor(BaseExecutionTimePredictor):
         model_names = [
             "attn_kv_cache_save",
         ]
-
+        print('>>fth pdb.set_trace()')
+        pdb.set_trace()
         for model_name in model_names:
             models[model_name] = self._train_model(
                 model_name=model_name,
@@ -809,6 +814,8 @@ class SklearnExecutionTimePredictor(BaseExecutionTimePredictor):
         return self._predictions["add"][(batch._total_num_tokens_rounded,)]
 
     def _get_tensor_parallel_communication_time(self, batch: Batch) -> float:
+        # print('fth 打印pdb信息pdb.set_trace()')
+        # pdb.set_trace() # fth
         return (
             self._predictions["all_reduce"][(batch._total_num_tokens_rounded,)]
             + self._config.nccl_cpu_launch_overhead_ms

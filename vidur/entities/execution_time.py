@@ -1,5 +1,5 @@
 from vidur.entities.base_entity import BaseEntity
-
+import pdb
 
 class ExecutionTime(BaseEntity):
     def __init__(
@@ -25,6 +25,9 @@ class ExecutionTime(BaseEntity):
         process_model_outputs_time: float,
         ray_comm_time: float,
     ) -> None:
+        
+        # print('fth 打印pdb信息pdb.set_trace()')
+        # pdb.set_trace() # fth
         self._id = ExecutionTime.generate_id()
 
         self._num_layers_per_pipeline_stage = num_layers_per_pipeline_stage

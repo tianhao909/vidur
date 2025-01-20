@@ -3,6 +3,7 @@ from math import ceil
 from vidur.config import BaseRequestGeneratorConfig, ReplicaConfig
 from vidur.entities.base_entity import BaseEntity
 from vidur.logger import init_logger
+import pdb  # fth: 导入Python标准库中的pdb模块，该模块用于调试Python代码
 
 logger = init_logger(__name__)
 
@@ -13,6 +14,8 @@ class Replica(BaseEntity):
         replica_config: ReplicaConfig,
         generator_config: BaseRequestGeneratorConfig,
     ) -> None:
+        
+        # pdb.set_trace()  # fth 调用pdb中的set_trace方法，程序将在这里暂停，进入调试模式
         self._id = Replica.generate_id()
 
         self._replica_config = replica_config

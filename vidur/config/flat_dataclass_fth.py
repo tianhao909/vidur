@@ -110,48 +110,35 @@ def reconstruct_original_dataclass(self) -> Any:
 
 
 @classmethod
-def create_from_cli_args(cls) -> Any:
-    # 从命令行参数创建实例
+def create_from_cli_args(cls) -> Any: # 从命令行参数创建实例
     """
-    This function is dynamically mapped to FlatClass as a class method.
+    This function is dynamically mapped to FlatClass as a class method. 这函数被动态映射为 FlatClass 的一个类方法。
     """
-    parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
-    # 创建命令行参数解析器
+    parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter) # 创建命令行参数解析器
 
-    for field in fields(cls):
-        # 遍历类的字段
+    for field in fields(cls): # 遍历类的字段
         nargs = None
         action = None
         field_type = field.type
-        help_text = cls.metadata_mapping[field.name].get("help", None)
-        # 得到字段类型和帮助文本
+        help_text = cls.metadata_mapping[field.name].get("help", None) # 得到字段类型和帮助文本
 
-        if is_list(field.type):
-            # 如果字段是列表类型
-            assert is_composed_of_primitives(field.type)
-            # 确认列表由原始类型组成
-            field_type = get_args(field.type)[0]
-            # 获取列表中元素的类型
+        if is_list(field.type): # 如果字段是列表类型
+            assert is_composed_of_primitives(field.type) # 确认列表由原始类型组成
+            field_type = get_args(field.type)[0] # 获取列表中元素的类型
             if is_primitive_type(field_type):
-                nargs = "+"
-                # 设置可选参数
+                nargs = "+" # 设置可选参数
             else:
                 field_type = json.loads
-        elif is_dict(field.type):
-            # 如果字段是字典类型
+        elif is_dict(field.type): # 如果字段是字典类型
             assert is_composed_of_primitives(field.type)
-            field_type = json.loads
-            # 将字段类型设置为JSON解析器
-        elif is_bool(field.type):
-            # 如果字段是布尔类型
-            action = BooleanOptionalAction
-            # 设置参数操作为布尔可选的
+            field_type = json.loads # 将字段类型设置为JSON解析器
+        elif is_bool(field.type): # 如果字段是布尔类型
+            action = BooleanOptionalAction # 设置参数操作为布尔可选的
 
         arg_params = {
             "type": field_type,
             "action": action,
-            "help": help_text,
-            # 配置参数的类型、操作和帮助文本
+            "help": help_text, # 配置参数的类型、操作和帮助文本
         }
 
         # 处理具有默认值和默认工厂的参数
@@ -159,27 +146,20 @@ def create_from_cli_args(cls) -> Any:
             # 如果字段有默认值
             value = field.default
             if callable(value):
-                value = value()
-            # 确保返回实际值
+                value = value() # 确保返回实际值
             arg_params["default"] = value
-        elif field.default_factory is not MISSING:
-            # 如果有默认工厂
+        elif field.default_factory is not MISSING: # 如果有默认工厂
             arg_params["default"] = field.default_factory()
         else:
-            arg_params["required"] = True
-            # 默认情况下必需
+            arg_params["required"] = True # 默认情况下必需
 
         if nargs:
-            arg_params["nargs"] = nargs
-            # 如果有选择参数则添加
-        parser.add_argument(f"--{field.name}", **arg_params)
-        # 添加参数至命令行解析器
+            arg_params["nargs"] = nargs # 如果有选择参数则添加
+        parser.add_argument(f"--{field.name}", **arg_params) # 添加参数至命令行解析器
 
-    args = parser.parse_args()
-    # 解析命令行参数
+    args = parser.parse_args() # 解析命令行参数
 
-    return cls(**vars(args))
-    # 通过解析得到的参数字典创建类实例
+    return cls(**vars(args)) # 通过解析得到的参数字典创建类实例
 
 
 def create_flat_dataclass(input_dataclass: Any) -> Any:
@@ -187,60 +167,45 @@ def create_flat_dataclass(input_dataclass: Any) -> Any:
     """
     Creates a new FlatClass type by recursively flattening the input dataclass.
     This allows for easy parsing of command line arguments along with storing/loading the configuration to/from a file.
+    通过递归展平输入的数据类来创建一个新的 FlatClass 类型。这便于解析命令行参数，并能够将配置存储到文件或从文件加载。
     """
     meta_fields_with_defaults = []
-    meta_fields_without_defaults = []
-    # 元数据字段，分为有默认值和没有的
-    processed_classes = set()
-    # 存储处理过的类
+    meta_fields_without_defaults = [] # 元数据字段，分为有默认值和没有的
+    processed_classes = set() # 存储处理过的类
     dataclass_args = defaultdict(list)
-    dataclass_dependencies = defaultdict(set)
-    # 数据类的参数和依赖关系
-    metadata_mapping = {}
-    # 字段的元数据信息
+    dataclass_dependencies = defaultdict(set) # 数据类的参数和依赖关系
+    metadata_mapping = {} # 字段的元数据信息
 
     def process_dataclass(_input_dataclass, prefix=""):
-        if _input_dataclass in processed_classes:
-            # 如果类已经处理过，则返回
+        if _input_dataclass in processed_classes: # 如果类已经处理过，则返回
             return
 
-        processed_classes.add(_input_dataclass)
-        # 将类添加到已处理集合
+        processed_classes.add(_input_dataclass) # 将类添加到已处理集合
 
-        for field in fields(_input_dataclass):
-            # 遍历类的字段
-            prefixed_name = f"{prefix}{field.name}"
-            # 生成带前缀的字段名
+        for field in fields(_input_dataclass): # 遍历类的字段
+            prefixed_name = f"{prefix}{field.name}" # 生成带前缀的字段名
 
-            if is_optional(field.type):
-                # 如果字段类型是可选的
-                field_type = get_inner_type(field.type)
-                # 获取内部类型
+            if is_optional(field.type): # 如果字段类型是可选的
+                field_type = get_inner_type(field.type) # 获取内部类型
             else:
                 field_type = field.type
 
             # 如果字段是BasePolyConfig的子类，处理它作为数据类
             if is_subclass(field_type, BasePolyConfig):
                 dataclass_args[_input_dataclass].append(
-                    (field.name, field.name, field_type)
-                    # 将字段信息增加到参数列表
+                    (field.name, field.name, field_type) # 将字段信息增加到参数列表
                 )
 
-                type_field_name = f"{field.name}_type"
-                # 添加一个类型参数
-                default_value = str(field.default_factory().get_type())
-                # 获取默认值
+                type_field_name = f"{field.name}_type" # 添加一个类型参数
+                default_value = str(field.default_factory().get_type()) # 获取默认值
                 meta_fields_with_defaults.append(
                     (type_field_name, type(default_value), default_value)
                 )
                 metadata_mapping[type_field_name] = field.metadata
 
-                assert hasattr(field_type, "__dataclass_fields__")
-                # 断言确认是数据类
-                for subclass in get_all_subclasses(field_type):
-                    # 遍历字段类型的所有子类
-                    dataclass_dependencies[_input_dataclass].add(subclass)
-                    # 增加依赖关系
+                assert hasattr(field_type, "__dataclass_fields__") # 断言确认是数据类
+                for subclass in get_all_subclasses(field_type): # 遍历字段类型的所有子类
+                    dataclass_dependencies[_input_dataclass].add(subclass) # 增加依赖关系
                     process_dataclass(subclass, f"{to_snake_case(subclass.__name__)}_")
                 continue
 
@@ -261,34 +226,26 @@ def create_flat_dataclass(input_dataclass: Any) -> Any:
             )
             # 收集字段的默认值和默认工厂
 
-            if field_default is not MISSING:
-                # 如果字段有默认值
+            if field_default is not MISSING: # 如果字段有默认值
                 meta_fields_with_defaults.append(
-                    (prefixed_name, field_type, field_default)
-                    # 将其加入有默认值的元数据字段列表中
+                    (prefixed_name, field_type, field_default) # 将其加入有默认值的元数据字段列表中
                 )
-            elif field_default_factory is not MISSING:
-                # 如果字段有默认工厂
+            elif field_default_factory is not MISSING: # 如果字段有默认工厂
                 meta_fields_with_defaults.append(
                     (prefixed_name, field_type, field_default_factory)
                 )
-            else:
-                # 没有默认值或默认工厂
+            else: # 没有默认值或默认工厂
                 meta_fields_without_defaults.append((prefixed_name, field_type))
 
             dataclass_args[_input_dataclass].append(
-                (prefixed_name, field.name, field_type)
-                # 增加参数信息
+                (prefixed_name, field.name, field_type) # 增加参数信息
             )
             metadata_mapping[prefixed_name] = field.metadata
 
-    process_dataclass(input_dataclass)
-    # 处理输入的数据类
+    process_dataclass(input_dataclass) # 处理输入的数据类
 
-    meta_fields = meta_fields_without_defaults + meta_fields_with_defaults
-    # 合并字段（有默认值和没有默认值）
-    FlatClass = make_dataclass("FlatClass", meta_fields)
-    # 创建一个新的平面数据类
+    meta_fields = meta_fields_without_defaults + meta_fields_with_defaults # 合并字段（有默认值和没有默认值）
+    FlatClass = make_dataclass("FlatClass", meta_fields) # 创建一个新的平面数据类
 
     # Metadata fields
     FlatClass.dataclass_args = dataclass_args
@@ -297,8 +254,6 @@ def create_flat_dataclass(input_dataclass: Any) -> Any:
 
     # Helper methods
     FlatClass.reconstruct_original_dataclass = reconstruct_original_dataclass
-    FlatClass.create_from_cli_args = create_from_cli_args
-    # 为平面类增加帮助方法
+    FlatClass.create_from_cli_args = create_from_cli_args # 为平面类增加帮助方法
 
-    return FlatClass
-    # 返回生成的平面数据类
+    return FlatClass # 返回生成的平面数据类

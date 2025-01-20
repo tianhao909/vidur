@@ -43,6 +43,8 @@ class BaseExecutionTimePredictor(ABC):
             tensor_parallel_communication_time = (
                 self._get_tensor_parallel_communication_time(batch)
             )
+        
+        print(f"fth  pipeline_parallel_communication_time={pipeline_parallel_communication_time}  tensor_parallel_communication_time={tensor_parallel_communication_time} /disk1/futianhao/software1/vidur/vidur/execution_time_predictor/base_execution_time_predictor.py")
 
         return ExecutionTime(
             self._num_layers_per_pipeline_stage,
