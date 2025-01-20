@@ -148,22 +148,24 @@ class JobConfig:
         # 生成作业配置的哈希值
         return hashlib.sha1(self.get_key().encode("utf-8")).hexdigest()[:8]
 
+
     def to_config_dict(self):
         # 返回作业配置的所有组合字典
         return {
-            **self.model_config.to_config_dict(),
-            **self.trace_config.to_config_dict(),
-            **self.cluster_config.to_config_dict(),
-            **self.scheduler_config.to_config_dict(),
-            "replica_config_tensor_parallel_size": self.num_tensor_parallel_workers,
-            "replica_config_num_pipeline_stages": self.num_pipeline_stages,
-            "vllm_scheduler_config_batch_size_cap": self.batch_size,
-            "lightllm_scheduler_config_batch_size_cap": self.batch_size,
-            "orca_scheduler_config_batch_size_cap": self.batch_size,
-            "faster_transformer_scheduler_config_batch_size_cap": self.batch_size,
-            "sarathi_scheduler_config_batch_size_cap": self.batch_size,
-            "cluster_config_num_replicas": self.num_replicas,
+            **self.model_config.to_config_dict(),  # 追加模型配置字典
+            **self.trace_config.to_config_dict(),  # 追加trace配置字典
+            **self.cluster_config.to_config_dict(),  # 追加集群配置字典
+            **self.scheduler_config.to_config_dict(),  # 追加调度器配置字典
+            "replica_config_tensor_parallel_size": self.num_tensor_parallel_workers,  # 设置张量并行大小
+            "replica_config_num_pipeline_stages": self.num_pipeline_stages,  # 设置流水线阶段数量
+            "vllm_scheduler_config_batch_size_cap": self.batch_size,  # 设置 vllm 调度器批量大小上限
+            "lightllm_scheduler_config_batch_size_cap": self.batch_size,  # 设置 lightllm 调度器批量大小上限
+            "orca_scheduler_config_batch_size_cap": self.batch_size,  # 设置 orca 调度器批量大小上限
+            "faster_transformer_scheduler_config_batch_size_cap": self.batch_size,  # 设置 faster transformer 调度器批量大小上限
+            "sarathi_scheduler_config_batch_size_cap": self.batch_size,  # 设置 sarathi 调度器批量大小上限
+            "cluster_config_num_replicas": self.num_replicas,  # 设置集群副本数量
         }
+
 
     @classmethod
     def generate_job_configs(cls, config: dict):

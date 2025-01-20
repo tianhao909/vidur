@@ -2,6 +2,8 @@ sudo docker exec -it fth_mamba /bin/bash
 
 mamba activate vidur 
 
+pip install debugpy -i https://mirrors.aliyun.com/pypi/simple/
+
 
 ```sh
 python -m vidur.main  \

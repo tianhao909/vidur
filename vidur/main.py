@@ -10,6 +10,7 @@ def main() -> None:
 
     # print('fth pass')
 
+    # breakpoint() # fth 断点
     simulator = Simulator(config)
     # print('fth pass')
 

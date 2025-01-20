@@ -19,3 +19,9 @@ python -m vidur.main  >test_fth/fth01.log \
 --random_forrest_execution_time_predictor_config_prediction_max_batch_size 512 \
 --random_forrest_execution_time_predictor_config_prediction_max_tokens_per_request 16384
 ```
+
+sudo docker start fth_vllm02
+sudo docker start fth_mamba
+
+sudo docker exec -it fth_mamba /bin/bash
+cd /app/software1/vidur

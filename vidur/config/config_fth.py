@@ -621,7 +621,17 @@ class ClusterConfig:
         metadata{"help": "Replica scheduler config."},  # 副本调度器配置
     )
 
+# 在下面的代码中：
+# 冒号（:）：
+# 在 Python 中，冒号用于定义数据类型和默认值。在使用 dataclass 时，冒号用于指定类属性的类型。例如，seed: int 表示 seed 是一个整数类型的属性。
+# 这种用法主要有助于类型检查和代码的自我文档化，使得代码更易于理解和维护。
+# field：
+# field 是 dataclasses 模块中的一个函数，用于指定数据类字段的默认值、默认工厂函数以及其他元数据信息。
+# 在代码中，例如 seed: int = field(default=42, ...)，field 函数用于为 seed 属性提供一个默认值 42，以及通过 metadata 提供一些附加信息（如帮助文档）。
+# default_factory 是 field 的一个可选参数，用于在初始化时调用工厂函数来生成默认值。
+# 总体来说，使用冒号和 field 能够帮助定义类的属性及其默认行为，并能更好地管理类的初始化和自动生成代码。
 
+# @dataclass 是 Python 中的一个装饰器，位于 dataclasses 模块中，用于简化类的创建。它可以自动为类生成一些常用的特殊方法，如 __init__()、__repr__()、__eq__() 等，从而减少样板代码，提高代码的可读性和维护性。
 @dataclass
 class SimulationConfig(ABC):
     seed: int = field(
