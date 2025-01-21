@@ -51,10 +51,10 @@ python -m vidur.main  \
 
 python -m vidur.main > test_fth/output_250113_1424.log \
 --replica_config_device a100 \
---replica_config_model_name meta-llama/Meta-Llama-3-8B \
+--replica_config_model_name meta-llama/Meta-Llama-3-70B \
 --cluster_config_num_replicas 1 \
---replica_config_tensor_parallel_size 2 \
---replica_config_num_pipeline_stages 1 \
+--replica_config_tensor_parallel_size 4 \
+--replica_config_num_pipeline_stages 2 \
 --request_generator_config_type synthetic \
 --synthetic_request_generator_config_num_requests 512  \
 --length_generator_config_type trace \
@@ -121,3 +121,8 @@ pdb.set_trace()
 import pdb
 
 /disk1/futianhao
+
+
+vidur-search可以运行的命令
+
+python -m vidur.config_optimizer.config_explorer.main --output-dir  /app/software1/vidur/test_fth --config-path /app/software1/vidur/vidur/config_optimizer/config_explorer/config/config.yml

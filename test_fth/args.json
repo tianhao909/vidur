@@ -1,0 +1,1 @@
+{"num_threads": 126, "min_search_granularity": 2.5, "output_dir": "/app/software1/vidur/test_fth", "cache_dir": "./cache_tmpfs", "config_path": "/app/software1/vidur/vidur/config_optimizer/config_explorer/config/config.yml", "scheduling_delay_slo_value": 5.0, "scheduling_delay_slo_quantile": 0.99, "max_iterations": 20, "time_limit": 30, "debug": false, "skip_cache_warmup": false}
