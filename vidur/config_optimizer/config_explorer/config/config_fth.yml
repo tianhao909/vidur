@@ -1,0 +1,71 @@
+clusters:  # 定义不同类型的计算集群
+  - device: h100  # 使用的设备为 h100
+    num_gpus: 16  # 集群中总共有 16 个 GPU
+    gpus_per_node: 4  # 每个节点上有 4 个 GPU
+  - device: a100  # 使用的设备为 a100
+    num_gpus: 16  # 集群中总共有 16 个 GPU
+    gpus_per_node: 4  # 每个节点上有 4 个 GPU
+  - device: a40  # 使用的设备为 a40
+    num_gpus: 32  # 集群中总共有 32 个 GPU
+    gpus_per_node: 8  # 每个节点上有 8 个 GPU
+
+schedulers:  # 定义不同的调度器以管理任务
+  - scheduler: vllm  # 使用 vllm 调度器
+  - scheduler: sarathi  # 使用 sarathi 调度器
+    chunk_size: 256  # 数据块大小设置为 256
+  - scheduler: sarathi  # 使用 sarathi 调度器
+    chunk_size: 512  # 数据块大小设置为 512
+  - scheduler: sarathi  # 使用 sarathi 调度器
+    chunk_size: 1024  # 数据块大小设置为 1024
+  - scheduler: sarathi  # 使用 sarathi 调度器
+    chunk_size: 2048  # 数据块大小设置为 2048
+  - scheduler: sarathi  # 使用 sarathi 调度器
+    chunk_size: 4096  # 数据块大小设置为 4096
+
+traces:  # 定义不同的运行数据Trace
+  - name: chat  # Trace名称为 'chat'
+    trace_file: "./data/processed_traces/lmsys_chat_1m_conversation_stats_llama2_tokenizer.csv"  # Trace文件路径
+    max_seq_len: 4096  # 最大序列长度为 4096
+    num_requests: 16000  # 请求总数为 16000
+    start_qps: 32  # 初始每秒查询数为 32
+  - name: arxiv  # Trace名称为 'arxiv'
+    trace_file: "./data/processed_traces/arxiv_summarization_stats_llama2_tokenizer_filtered_v2.csv"  # Trace文件路径
+    max_seq_len: 4096  # 最大序列长度为 4096
+    num_requests: 16000  # 请求总数为 16000
+    start_qps: 16  # 初始每秒查询数为 16
+  - name: bwb  # Trace名称为 'bwb'
+    trace_file: "./data/processed_traces/bwb_stats_llama2_tokenizer_filtered_v2.csv"  # Trace文件路径
+    max_seq_len: 4096  # 最大序列长度为 4096
+    num_requests: 16000  # 请求总数为 16000
+    start_qps: 8  # 初始每秒查询数为 8
+
+batch_sizes: [32, 64, 128]  # 定义可选的批处理大小
+tp_dimensions: [1, 2, 4, 8]  # 定义模型切片的可选数量（Tensor Parallelism）
+pp_dimensions: [1, 2, 4]  # 定义流水线并行的可选数量（Pipeline Parallelism）
+
+models:  # 定义要使用的不同模型
+  # - name: phi-2  # 模型名称为 'phi-2'
+  #   identifier: microsoft/phi-2  # 模型标识符
+  #   exclude_tp_dims: [2, 4, 8]  # 排除的 Tensor Parallelism 数量
+
+  - name: llama-2-7b-hf  # 模型名称为 'llama-2-7b-hf'
+    identifier: meta-llama/Llama-2-7b-hf  # 模型标识符
+
+  # - name: internlm-20b  # 模型名称为 'internlm-20b'
+  #   identifier: internlm/internlm-20b  # 模型标识符
+  #   exclude_tp_dims: [1]  # 排除的 Tensor Parallelism 数量
+
+  - name: codellama-34b-instruct-hf  # 模型名称为 'codellama-34b-instruct-hf'
+    identifier: codellama/CodeLlama-34b-Instruct-hf  # 模型标识符
+
+  # - name: llama-2-70b-hf  # 模型名称为 'llama-2-70b-hf'
+  #   identifier: meta-llama/Llama-2-70b-hf  # 模型标识符
+  #   exclude_tp_dims: [1]  # 排除的 Tensor Parallelism 数量
+
+  # - name: qwen-72b  # 模型名称为 'qwen-72b'
+  #   identifier: Qwen/Qwen-72B  # 模型标识符
+  #   exclude_tp_dims: [1]  # 排除的 Tensor Parallelism 数量
+
+  - name: qwen-72b  # 模型名称为 'qwen-72b'
+    identifier: Qwen/Qwen-72B  # 模型标识符
+    exclude_tp_dims: [1]  # 排除的 Tensor Parallelism 数量
