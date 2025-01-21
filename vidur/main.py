@@ -8,7 +8,7 @@ from pprint import pprint # fth 假设config是一个类实例
 def main() -> None:
     config: SimulationConfig = SimulationConfig.create_from_cli_args()
     # pdb.set_trace() # fth 
-    print('fth 打印配置信息pprint')
+    print('fth 打印配置信息pprint /disk1/futianhao/software1/vidur/vidur/main.py')
     pprint(vars(config)) # fth 打印配置信息
 
     set_seeds(config.seed)

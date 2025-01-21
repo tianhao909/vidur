@@ -13,6 +13,8 @@ from vidur.scheduler import BaseGlobalScheduler, GlobalSchedulerRegistry
 
 logger = init_logger(__name__)
 
+from pprint import pprint # fth 假设config是一个类实例
+
 
 class Simulator:
     def __init__(self, config: SimulationConfig) -> None:
@@ -44,6 +46,10 @@ class Simulator:
             self._config,
             self._cluster.replicas,
         )
+
+        print('fth 打印配置信息pprint 250121 1035 /disk1/futianhao/software1/vidur/vidur/simulator.py')
+        pprint(vars(self._request_generator)) # fth 打印配置信息
+        pprint(vars(self._scheduler)) # fth 打印配置信息
 
         self._init_event_queue()
         atexit.register(self._write_output)

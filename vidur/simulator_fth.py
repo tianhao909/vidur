@@ -14,8 +14,12 @@ from vidur.scheduler import BaseGlobalScheduler, GlobalSchedulerRegistry
 logger = init_logger(__name__)  # 初始化日志记录器
 
 class Simulator:
+
+    # 在 Python 中，冒号用于类型注释，也称为类型提示。在你的代码中，self._config: SimulationConfig = config 中的 : SimulationConfig 是用来表示 self._config 是 SimulationConfig 类型的变量。
+    # 类型提示是 Python 3.5 引入的功能，主要是为了提高代码的可读性和可维护性。它有助于开发者和代码编辑器了解变量应该是什么类型，这在大型项目中尤其有用。它们也可以与静态类型检查工具（如 mypy）一起使用，以便在运行代码之前检测到类型错误。
+    # 至于是否可以不加类型提示，答案是可以的。Python 是动态类型语言，因此类型声明并不是强制性的，代码在没有类型提示的情况下也会正常运行。不过，添加类型提示会使代码更具可读性，从而在开发和维护阶段提供一定的帮助。
     def __init__(self, config: SimulationConfig) -> None:
-        self._config: SimulationConfig = config  # 保存配置
+        self._config: SimulationConfig = config  # 保存配置 类型注释
 
         self._time = 0  # 初始化模拟时间
         self._terminate = False  # 初始化终止标志
@@ -43,6 +47,8 @@ class Simulator:
             self._config,
             self._cluster.replicas,
         )  # 获取调度器
+
+
 
         self._init_event_queue()  # 初始化事件队列
         atexit.register(self._write_output)  # 注册退出时写输出的函数

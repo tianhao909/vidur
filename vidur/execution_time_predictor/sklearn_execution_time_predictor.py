@@ -25,7 +25,7 @@ from vidur.execution_time_predictor.base_execution_time_predictor import (
 from vidur.logger import init_logger
 import pdb 
 
-
+from pprint import pprint
 
 
 logger = init_logger(__name__)
@@ -45,6 +45,13 @@ class SklearnExecutionTimePredictor(BaseExecutionTimePredictor):
             replica_scheduler_config=replica_scheduler_config,
             metrics_config=metrics_config,
         )
+
+        print('fth 打印配置信息pprint /disk1/futianhao/software1/vidur/vidur/execution_time_predictor/sklearn_execution_time_predictor.py')
+        pprint(vars(predictor_config)) # fth 打印配置信息
+        pprint(vars(replica_config)) # fth 打印配置信息
+        pprint(vars(replica_scheduler_config)) # fth 打印配置信息
+        pprint(vars(metrics_config)) # fth 打印配置信息
+
         os.makedirs(self._cache_dir, exist_ok=True)
 
         # These overheads are only for GQA models
@@ -345,6 +352,8 @@ class SklearnExecutionTimePredictor(BaseExecutionTimePredictor):
         feature_cols: List[str],
         target_col: str,
     ) -> BaseEstimator:
+        
+        # print(f">>fth model_name= {model_name} df={df} feature_cols={feature_cols} target_col={target_col} /disk1/futianhao/software1/vidur/vidur/execution_time_predictor/sklearn_execution_time_predictor.py")
         if len(df) == 0:
             raise Exception(f"Training data for model {model_name} is empty")
 
@@ -486,8 +495,8 @@ class SklearnExecutionTimePredictor(BaseExecutionTimePredictor):
         model_names = [
             "attn_kv_cache_save",
         ]
-        print('>>fth pdb.set_trace()')
-        pdb.set_trace()
+        # print('>>fth pdb.set_trace()')
+        # pdb.set_trace()
         for model_name in model_names:
             models[model_name] = self._train_model(
                 model_name=model_name,

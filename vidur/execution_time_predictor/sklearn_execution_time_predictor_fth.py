@@ -24,6 +24,8 @@ from vidur.execution_time_predictor.base_execution_time_predictor import (
 )
 from vidur.logger import init_logger
 
+from pprint import pprint
+
 logger = init_logger(__name__)
 
 
@@ -41,6 +43,9 @@ class SklearnExecutionTimePredictor(BaseExecutionTimePredictor):  # 定义一个
             replica_scheduler_config=replica_scheduler_config,
             metrics_config=metrics_config,
         )  # 调用父类的初始化方法以便继承属性
+
+        # pprint()
+
         os.makedirs(self._cache_dir, exist_ok=True)  # 创建缓存目录，如果目录不存在则创建
 
         # These overheads are only for GQA models
