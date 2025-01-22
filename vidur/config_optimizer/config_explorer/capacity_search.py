@@ -14,6 +14,8 @@ from vidur.config_optimizer.config_explorer.ray_utils import (
     get_ip,
 )
 from vidur.logger import init_logger
+import pdb
+from pprint import pprint
 
 logger = init_logger(__name__)
 
@@ -48,6 +50,8 @@ class CapacitySearch:
         self,
         scheduler_config: SimulationConfig,
     ):
+        print(f">>fth _generate_run_command 打印 pprint(vars(scheduler_config)) 250122 1725 /disk1/futianhao/software1/vidur/vidur/config_optimizer/config_explorer/capacity_search.py")
+        pprint(vars(scheduler_config))
         cpu_affinity_command = ""
         if self.cpu_core_id is not None and platform.system() != "Darwin":
             cpu_affinity_command = f"taskset --cpu-list {self.cpu_core_id}"
@@ -58,6 +62,7 @@ class CapacitySearch:
         return command
 
     def _get_result_file(self, run_dir: str) -> str:
+        print(f">>fth run_dir={run_dir} 250122 1644")
         scheduling_delay_file = glob.glob(
             f"{run_dir}/*/plots/request_scheduling_delay.csv"
         )
@@ -92,6 +97,8 @@ class CapacitySearch:
             time_limit=self.args.time_limit,
             job_config=self.job_config,
         )
+        # print('fth pdb.set_trace() 250122 1524 /disk1/futianhao/software1/vidur/vidur/config_optimizer/config_explorer/capacity_search.py')
+        # pdb.set_trace()
         run_dir = simulator_config.get_run_dir()
         os.makedirs(run_dir, exist_ok=True)
 
@@ -126,9 +133,11 @@ class CapacitySearch:
         """
         Perform binary search to find the maximum QPS under the SLO
         """
+        print('>>fth input Starting search for xxxx  /disk1/futianhao/software1/vidur/vidur/config_optimizer/config_explorer/capacity_search.py')
         logger.info(
             f"Starting search for {self.job_config.get_human_readable_name()}",
         )
+        print('>>fth output Starting search(self) for xxxx  /disk1/futianhao/software1/vidur/vidur/config_optimizer/config_explorer/capacity_search.py')
 
         left = 0
         right = self.job_config.start_qps * 2

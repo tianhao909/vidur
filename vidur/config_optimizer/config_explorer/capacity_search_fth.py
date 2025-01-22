@@ -48,17 +48,52 @@ class CapacitySearch:  # 定义一个CapacitySearch类
         self,
         scheduler_config: SimulationConfig,  # 调度器配置
     ):
+        # 初始化一个字符串变量 cpu_affinity_command，默认为空字符串。
+        # 该变量用于存储将 CPU 亲和性设置的命令。CPU 亲和性指的是在多核处理器上，让进程（任务）只在指定的 CPU 核心上运行
         cpu_affinity_command = ""  # 初始化CPU亲和性命令为空
+
+        # 检查 self.cpu_core_id 是否不为空，即检查是否指定了 CPU 核心。
+        # 使用 platform.system() 方法检查当前操作系统，如果操作系统不是 macOS（Darwin内核），则条件成立。
+        # 如果前面的条件成立，使用 taskset 命令构建 CPU 亲和性命令， --cpu-list 参数指定了允许进程运行的 CPU 核心。
+        # self.cpu_core_id 是指定的 CPU 核心ID，如核心0或核心1。
         if self.cpu_core_id is not None and platform.system() != "Darwin":  # 如果分配了CPU核心，并且不是macOS系统
             cpu_affinity_command = f"taskset --cpu-list {self.cpu_core_id}"  # 构建任务集的CPU分配命令
 
         # 构建完整的运行命令，包含nice命令和CPU亲和性命令
+        # 构建完整的运行命令，nice -n 1 用于设置进程的调度优先级，这里的数值 1 代表设置为较低优先级。
+        # {cpu_affinity_command} 是插入前面构建好的 CPU 亲和性命令，如果没有指定核心或是 macOS 系统，这部分将是空字符串。
+        # python -m vidur.main 调用 Python 作为解释器，运行模块 vidur.main。
+        # {scheduler_config.to_args()} 调用 scheduler_config 对象的 to_args() 方法将配置转换为命令行参数字符串。
+
+        # 这行代码是一条用 Python 构造并执行 Shell 命令的示例。我们来逐步解析这条代码的语法和作用：
+
+        # f"" 字符串：
+        # 这是 Python 3.6 引入的格式化字符串（f-string），用于简化字符串插值操作。f-string 以字母 f 或 F 开头，在字符串内部可以通过 {} 包含变量或表达式，Python 会在运行时将其替换为相应的值。
+        
+        # nice -n 1：
+        # nice 是一个 Unix/Linux 命令，用于启动一个进程并设定其优先级。-n 1 设置进程的优先级增量为 1，这意味着将以较低的优先级运行命令。这可以减少进程对 CPU 资源的竞争，使其他重要进程获得更多 CPU 资源。
+        
+        # {cpu_affinity_command}：
+        # 这是一个嵌入在 f-string 中的变量或表达式，表示一个 Python 变量（或可选的代码片段），其值将在字符串格式化时插入到此处。cpu_affinity_command 是一个变量，可能代表设置 CPU 亲和性（进程绑定到特定 CPU 核心）的命令。
+        
+        # python -m vidur.main：
+        # 这部分是使用 Python 解释器以模块形式运行一个 Python 脚本。-m 参数表示以模块方式运行，vidur.main 应该是模块路径，指向某个 Python 包中的 main 模块。
+        
+        # {scheduler_config.to_args()}：
+        # 这也是一个嵌入在 f-string 中的表达式。这里调用了 scheduler_config 对象的 to_args() 方法，假定此方法生成一个字符串或字符串列表，这些字符串最终会添加到命令行参数中，传递给 vidur.main 模块。
         command = f"nice -n 1 {cpu_affinity_command} python -m vidur.main {scheduler_config.to_args()}"
+
+        # 使用日志记录器输出调试信息，显示即将运行的完整命令字符串 command。
+        # logger.debug 方法用于输出调试等级的日志信息。
         logger.debug(f"Running command: {command}")  # 输出调试信息
 
         return command  # 返回构建的命令
 
     def _get_result_file(self, run_dir: str) -> str:  # 获取结果文件
+        # glob模块：glob 是文件模式匹配的一个模块，允许你使用符号匹配文件系统中的文件。
+        # 路径匹配：f"{run_dir}/*/plots/request_scheduling_delay.csv" 是用来生成路径字符串，其中 f"{run_dir}" 是一个 f-string，占位符 run_dir 会被传入的参数替换。* 是通配符，表示匹配任意目录。
+        # 文件路径：它试图在 run_dir 目录下的任何子目录中的 plots 子目录中查找 request_scheduling_delay.csv 文件。
+        # >>fth run_dir=vidur/config_optimizer/config_explorer/search_output_fth/runs/7003b794/16.0
         scheduling_delay_file = glob.glob(  # 使用glob模块匹配结果文件
             f"{run_dir}/*/plots/request_scheduling_delay.csv"
         )

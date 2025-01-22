@@ -23,11 +23,11 @@ schedulers:
   #   chunk_size: 4096
 
 traces:
-  # - name: chat
-  #   trace_file: "./data/processed_traces/lmsys_chat_1m_conversation_stats_llama2_tokenizer.csv"
-  #   max_seq_len: 4096
-  #   num_requests: 16000
-  #   start_qps: 32
+  - name: chat
+    trace_file: "./data/processed_traces/lmsys_chat_1m_conversation_stats_llama2_tokenizer.csv"
+    max_seq_len: 4096
+    num_requests: 16000
+    start_qps: 32
   - name: arxiv
     trace_file: "./data/processed_traces/arxiv_summarization_stats_llama2_tokenizer_filtered_v2.csv"
     max_seq_len: 4096
