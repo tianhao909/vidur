@@ -11,10 +11,10 @@ clusters:
 
 schedulers:
   - scheduler: vllm
-  # - scheduler: sarathi
-  #   chunk_size: 256
-  # - scheduler: sarathi
-  #   chunk_size: 512
+  - scheduler: sarathi
+    chunk_size: 256
+  - scheduler: sarathi
+    chunk_size: 512
   # - scheduler: sarathi
   #   chunk_size: 1024
   # - scheduler: sarathi
@@ -39,9 +39,18 @@ traces:
   #   num_requests: 16000
   #   start_qps: 8
 
-batch_sizes: [32, 64, 128]
-tp_dimensions: [1, 2, 4, 8]
-pp_dimensions: [1, 2, 4]
+# batch_sizes: [32, 64, 128]
+# tp_dimensions: [1, 2, 4, 8]
+# pp_dimensions: [1, 2, 4]
+
+# batch_sizes: [32]
+# tp_dimensions: [1, 4]
+# pp_dimensions: [1, 4]
+
+batch_sizes: [32]
+tp_dimensions: [1]
+pp_dimensions: [1]
+
 
 models:
   # - name: phi-2
@@ -52,14 +61,14 @@ models:
   # - name: internlm-20b
   #   identifier: internlm/internlm-20b
   #   exclude_tp_dims: [1]
-  - name: codellama-34b-instruct-hf
-    identifier: codellama/CodeLlama-34b-Instruct-hf
+  # - name: codellama-34b-instruct-hf
+  #   identifier: codellama/CodeLlama-34b-Instruct-hf
   # - name: llama-2-70b-hf
   #   identifier: meta-llama/Llama-2-70b-hf
   #   exclude_tp_dims: [1]
   # - name: qwen-72b
   #   identifier: Qwen/Qwen-72B
   #   exclude_tp_dims: [1]
-  - name: qwen-72b
-    identifier: Qwen/Qwen-72B
-    exclude_tp_dims: [1]
+  # - name: qwen-72b
+  #   identifier: Qwen/Qwen-72B
+  #   exclude_tp_dims: [1]

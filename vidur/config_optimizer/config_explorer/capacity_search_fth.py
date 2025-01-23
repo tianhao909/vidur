@@ -87,6 +87,8 @@ class CapacitySearch:  # 定义一个CapacitySearch类
         # logger.debug 方法用于输出调试等级的日志信息。
         logger.debug(f"Running command: {command}")  # 输出调试信息
 
+
+
         return command  # 返回构建的命令
 
     def _get_result_file(self, run_dir: str) -> str:  # 获取结果文件

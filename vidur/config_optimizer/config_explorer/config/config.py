@@ -33,12 +33,13 @@ class TraceConfig:
     def get_key(self):
         return f"{self.name}_tk{self.max_seq_len}_rq{self.num_requests}"
 
+    # fth 注释掉 "synthetic_request_generator_config_max_tokens": self.max_seq_len, 250123 1047SSS
     def to_config_dict(self):
         return {
             "request_generator_config_type": "synthetic",
             "length_generator_config_type": "trace",
             "interval_generator_config_type": "poisson",
-            "synthetic_request_generator_config_max_tokens": self.max_seq_len,
+            # "synthetic_request_generator_config_max_tokens": self.max_seq_len,
             "trace_request_length_generator_config_max_tokens": self.max_seq_len,
             "zipf_request_length_generator_config_max_tokens": self.max_seq_len,
             "uniform_request_length_generator_config_max_tokens": self.max_seq_len,

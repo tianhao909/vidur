@@ -182,6 +182,7 @@ vidur-search可以运行的命令
 
 python -m vidur.config_optimizer.config_explorer.main --output-dir  /app/software1/vidur/test_fth --config-path /app/software1/vidur/vidur/config_optimizer/config_explorer/config/config.yml
 
+
 ## Simulator Output 模拟器输出
 
 * The metrics will be logged to wandb directly and a copy will be stored in the `simulator_output/<TIMESTAMP>` directory. __A description of all the logged metrics can be found [here](docs/metrics.md).__

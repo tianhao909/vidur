@@ -58,6 +58,8 @@ class CapacitySearch:
 
         command = f"nice -n 1 {cpu_affinity_command} python -m vidur.main {scheduler_config.to_args()}"
         logger.debug(f"Running command: {command}")
+        
+        print(f">>fth command: {command} 250123 1023 /disk1/futianhao/software1/vidur/vidur/config_optimizer/config_explorer/capacity_search.py")
 
         return command
 

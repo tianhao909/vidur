@@ -2,7 +2,7 @@ import hashlib
 from dataclasses import dataclass, field
 from itertools import product
 from typing import List, Optional
-
+import pdb
 
 def _get_hash(key):
     return hashlib.sha1(key.encode("utf-8")).hexdigest()[:8]
@@ -279,6 +279,8 @@ class BenchmarkConfig:
         return f"{self.job_config.get_human_readable_name()}, QPS: {self.qps}, Run id: {self.get_run_id()}"
 
     def get_run_dir(self):
+        # print('>>fth pdb.set_trace() 250122 1516 /disk1/futianhao/software1/vidur/sarathi/benchmark/capacity_search/config/config.py')
+        # pdb.set_trace()
         return (
             f"{self.output_dir}/runs/{_get_hash(self.job_config.get_key())}/{self.qps}"
         )
