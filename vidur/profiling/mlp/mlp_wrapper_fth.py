@@ -39,7 +39,7 @@ class MlpWrapper:
         self.profile_method = profile_method  # 轮廓分析方法
         self.rank = rank  # 排名
         self.output_dir = output_dir  # 输出目录
-        os.makedirs(f"{self.output_dir}/profiler_traces/", exist_ok=True)  # 创建输出目录
+        os.makedirs(f"{self.output_dir}/profiler_traces/", exist_ok=True)  # 创建输出目录 
 
         self.model = GPTModel(
             model_config,
