@@ -138,7 +138,7 @@ def profile_model(  # 定义profile_model函数，用于分析给定模型
     return df  # 返回结果DataFrame
 
 def main():  # 定义main函数，程序的主入口
-    args = parse_args()  # 解析命令行参数
+    args = parse_args()  # 解析命令行参数 # /disk1/futianhao/software1/vidur/data/model_configs/meta-llama/Llama-2-70b-hf.yml
     yaml.dump(vars(args), open(f"{args.output_dir}/config.yaml", "w"))  # 将参数保存到YAML文件
 
     num_tokens_to_profile = get_num_tokens_to_profile(args.max_tokens)  # 获取分析的token数量
