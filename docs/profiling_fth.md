@@ -93,6 +93,10 @@ We need actual GPUs to get profiling data for a new model. Once the profiling is
         python -m vidur.profiling.mlp.main \
         --models codellama/CodeLlama-34b-Instruct-hf \
         --num_gpus 1
+
+        python -m vidur.profiling.mlp.main \
+        --models meta-llama/Llama-2-70b-hf \
+        --num_gpus 1
     ```
 
     - Run `python vidur/profiling/mlp/main.py --help` for more options.
@@ -210,6 +214,10 @@ Currently available data include: 目前可用的数据包括：
 
         python /app/software1/vidur/vidur/profiling/collectives/main.py \
         --num_workers_per_node_combinations 2 \
+        --collective send_recv
+
+        python /app/software1/vidur/vidur/profiling/collectives/main.py \
+        --num_workers_per_node_combinations 1 \
         --collective send_recv
     ```
 

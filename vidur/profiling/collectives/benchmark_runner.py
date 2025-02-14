@@ -91,6 +91,7 @@ class BenchmarkRunner:
             rank=rank,
             world_size=num_workers,
             init_method=f"tcp://{self._head_ip}:{comm_id}",
+            # init_method=f"tcp://33.254.158.199:{comm_id}",  # fth250214 强制使用IPv4地址
         )
 
     def _get_rank(self, num_workers: int, devices_per_node: int):
