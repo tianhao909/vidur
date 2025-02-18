@@ -22,38 +22,7 @@ ACTIVE_STEPS = 20  # 活跃步骤数
 
 
 class MlpWrapper:
-    def __init__(
-        self,
-        model_config: ModelConfig,  # 模型配置
-        num_tensor_parallel_workers: int,  # 张量并行的工作者数量
-        profile_method: str,  # 轮廓分析方法
-        rank: int,  # 排名
-        output_dir: str,  # 输出目录
-    ):
-        super().__init__()
-
-        self.timer_stats_store = TimerStatsStore(profile_method=profile_method)  # 计时器统计存储
-
-        self.model_config = model_config  # 模型配置
-        self.num_tensor_parallel_workers = num_tensor_parallel_workers  # 张量并行的工作者数量
-        self.profile_method = profile_method  # 轮廓分析方法
-        self.rank = rank  # 排名
-        self.output_dir = output_dir  # 输出目录
-        os.makedirs(f"{self.output_dir}/profiler_traces/", exist_ok=True)  # 创建输出目录 
-
-        self.model = GPTModel(
-            model_config,
-            num_tensor_parallel_workers,
-            (
-                ACTIVE_STEPS
-                if self.profile_method == ProfileMethod.RECORD_FUNCTION.value  # 检查是否使用记录功能方法
-                else 1
-            ),
-        )
-        initialize_dummy_weights(self.model)  # 初始化虚拟权重
-        self.model = self.model.to(dtype=torch.float16).cuda().eval()  # 设置模型精度为 float16 并在 GPU 上执行
-
-
+ 
     @torch.inference_mode()  # 装饰器，禁用梯度计算，优化推理性能
     def profile(self, num_tokens: int):  # 定义profile方法，接受num_tokens参数
         vocab_range = self.model_config.vocab_size // self.num_tensor_parallel_workers  # 计算每个并行工作者的词汇范围
