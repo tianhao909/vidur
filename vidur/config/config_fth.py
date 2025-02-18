@@ -529,11 +529,11 @@ class BaseExecutionTimePredictorConfig(BasePolyConfig):
     )
     prediction_max_batch_size: int = field(
         default=128,
-        metadata{"help": "Max batch size for prediction."},  # 最大批处理大小
+        metadata={"help": "Max batch size for prediction."},  # 最大批处理大小
     )
     prediction_max_tokens_per_request: int = field(
         default=4096,
-        metadata{"help": "Max tokens per request for prediction."},  # 每个请求的最大token数
+        metadata={"help": "Max tokens per request for prediction."},  # 每个请求的最大token数
     )
     attention_decode_batching_overhead_fraction: float = field(
         default=0.1,
@@ -541,15 +541,15 @@ class BaseExecutionTimePredictorConfig(BasePolyConfig):
     )
     attention_prefill_batching_overhead_fraction: float = field(
         default=0.1,
-        metadata{"help": "Attention prefill batching overhead fraction."},  # 预填充批处理的注意力开销系数
+        metadata={"help": "Attention prefill batching overhead fraction."},  # 预填充批处理的注意力开销系数
     )
     nccl_cpu_launch_overhead_ms: float = field(
         default=0.02,
-        metadata{"help": "NCCL CPU launch overhead in ms."},  # NCCL CPU启动开销（毫秒）
+        metadata={"help": "NCCL CPU launch overhead in ms."},  # NCCL CPU启动开销（毫秒）
     )
     nccl_cpu_skew_overhead_per_device_ms: float = field(
         default=0.0,
-        metadata{"help": "NCCL CPU skew overhead per device in ms."},  # 每个设备的NCCL CPU偏差开销（毫秒）
+        metadata={"help": "NCCL CPU skew overhead per device in ms."},  # 每个设备的NCCL CPU偏差开销（毫秒）
     )
     num_training_job_threads: int = field(
         default=-1,
@@ -597,7 +597,7 @@ class RandomForrestExecutionTimePredictorConfig(BaseExecutionTimePredictorConfig
     )
     min_samples_split: List[int] = field(
         default_factory=lambda: [2, 5, 10],
-        metadata{"help": "Minimum samples split for random forest."},  # 随机森林的最小样本分割数
+        metadata={"help": "Minimum samples split for random forest."},  # 随机森林的最小样本分割数
     )
 
     @staticmethod
@@ -614,11 +614,11 @@ class ClusterConfig:
     replica_config: ReplicaConfig = field(default_factory=ReplicaConfig)
     global_scheduler_config: BaseGlobalSchedulerConfig = field(
         default_factory=RoundRobinGlobalSchedulerConfig,
-        metadata{"help": "Global scheduler config."},  # 全局调度器配置
+        metadata={"help": "Global scheduler config."},  # 全局调度器配置
     )
     replica_scheduler_config: BaseReplicaSchedulerConfig = field(
         default_factory=SarathiSchedulerConfig,
-        metadata{"help": "Replica scheduler config."},  # 副本调度器配置
+        metadata={"help": "Replica scheduler config."},  # 副本调度器配置
     )
 
 # 在下面的代码中：
@@ -640,7 +640,7 @@ class SimulationConfig(ABC):
     )
     log_level: str = field(
         default="info",
-        metadata{"help": "Logging level."},  # 日志记录级别
+        metadata={"help": "Logging level."},  # 日志记录级别
     )
     time_limit: int = field(
         default=0,  # in seconds, 0 is no limit
@@ -648,19 +648,19 @@ class SimulationConfig(ABC):
     )
     cluster_config: ClusterConfig = field(
         default_factory=ClusterConfig,
-        metadata{"help": "Cluster config."},  # 集群配置
+        metadata={"help": "Cluster config."},  # 集群配置
     )
     request_generator_config: BaseRequestGeneratorConfig = field(
         default_factory=SyntheticRequestGeneratorConfig,
-        metadata{"help": "Request generator config."},  # 请求生成器配置
+        metadata={"help": "Request generator config."},  # 请求生成器配置
     )
     execution_time_predictor_config: BaseExecutionTimePredictorConfig = field(
         default_factory=RandomForrestExecutionTimePredictorConfig,
-        metadata{"help": "Execution time predictor config."},  # 执行时间预测器配置
+        metadata={"help": "Execution time predictor config."},  # 执行时间预测器配置
     )
     metrics_config: MetricsConfig = field(
         default_factory=MetricsConfig,
-        metadata{"help": "Metrics config."},  # 度量配置
+        metadata={"help": "Metrics config."},  # 度量配置
     )
 
     def __post_init__(self):
@@ -683,4 +683,5 @@ class SimulationConfig(ABC):
     def write_config_to_file(self):
         config_dict = dataclass_to_dict(self)  # 将数据类转换为字典
         with open(f"{self.metrics_config.output_dir}/config.json", "w") as f:
-            json.dump(config_dict, f, indent=4)  # 将配置字典保存为JSON文件
+            json.dump(config_dict, f, indent=4)  # 将配置字典保存为JSON文件  
+            
